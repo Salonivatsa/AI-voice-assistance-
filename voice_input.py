@@ -1,26 +1,3 @@
-# import speech_recognition as sr
-
-# def listen_voice():
-#     recognizer = sr.Recognizer()
-#     with sr.Microphone() as source:
-#         print("Listening...")
-
-#         recognizer.adjust_for_ambient_noise(source)
-#         audio = recognizer.listen(source)
-
-#     try:
-#         text = recognizer.recognize_google(audio)
-#         print(f"You said: {text}")
-#         return text
-    
-#     except sr.UnknownValueError:
-#         print("Sorry, I could not understand the audio.")
-#         return None
-    
-#     except sr.RequestError as e:
-#         print(f"Could not request results; {e}")
-#         return None
-
 import speech_recognition as sr
 
 def listen_voice():
@@ -30,7 +7,14 @@ def listen_voice():
         with sr.Microphone() as source:
             print("Listening... Speak now!")
 
-            recognizer.adjust_for_ambient_noise(source, duration=1)
+            recognizer.adjust_for_ambient_noise(source, duration=2)
+
+
+            audio = recognizer.listen(
+            source,
+            timeout=10,
+            phrase_time_limit=10
+            )
 
             print("Start speaking...")
             audio = recognizer.listen(
@@ -42,6 +26,7 @@ def listen_voice():
         print("Processing your voice...")
 
         text = recognizer.recognize_google(audio, language="en-IN")
+        # text = recognizer.recognize_amazon(audio, language="hi-IN")
 
         print("You said:", text)
         return text
